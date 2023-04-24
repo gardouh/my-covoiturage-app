@@ -23,8 +23,8 @@ module.exports = {
       isIn: ['pending', 'in_progress', 'delivered'],
       defaultsTo: 'pending'
     },
-    sender: {
-      model: 'User'
+    senders: {
+      collection: 'User'
     },
     deliveryPerson: {
       model: 'User'

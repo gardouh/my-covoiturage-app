@@ -1,22 +1,16 @@
-/**
- * Policy Mappings
- * (sails.config.policies)
- *
- * Policies are simple functions which run **before** your actions.
- *
- * For more information on configuring policies, check out:
- * https://sailsjs.com/docs/concepts/policies
- */
-
+const jwtAuth = require('../api/middleware/jwtAuth');
 module.exports.policies = {
+  UserController: {
+    find: jwtAuth,
+    create: true, // Autoriser l'accès sans token pour la création d'un utilisateur
+    update: jwtAuth,
+    delete: jwtAuth,
+  },
 
-  /***************************************************************************
-  *                                                                          *
-  * Default policy for all controllers and actions, unless overridden.       *
-  * (`true` allows public access)                                            *
-  *                                                                          *
-  ***************************************************************************/
+  AuthController: {
+    login: true, // Autoriser l'accès sans token pour se connecter
+    signup: true, // Autoriser l'accès sans token pour s'inscrire
+  },
 
-  // '*': true,
-
+  // Ajoutez des règles pour d'autres contrôleurs si nécessaire
 };

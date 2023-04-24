@@ -16,9 +16,18 @@ module.exports = {
       required: true,
       unique: true
     },
+    hashedPassword: {
+      type: 'string',
+      required: true
+    },
+    role: {
+      type: 'string',
+      isIn: ['carrier', 'client'],
+      required: true
+    },
     sentParcels: {
       collection: 'Parcel',
-      via: 'sender'
+      via: 'senders'
     },
     deliveredParcels: {
       collection: 'Parcel',

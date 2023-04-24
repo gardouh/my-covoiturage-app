@@ -1,10 +1,46 @@
 {
   "info": {
-    "_postman_id": "f0b0e554-3a3d-4c15-9f02-6f9e2a1a6a5f",
-    "name": "Sails Auth Collection",
+    "name": "Sails Auth and Car Collection",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
+    {
+      "name": "Signup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:1337/signup",
+          "host": [
+            "http://localhost:1337"
+          ],
+          "path": [
+            "signup"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var jsonData = JSON.parse(responseBody);",
+              "postman.setEnvironmentVariable('jwt', jsonData.token);"
+            ]
+          }
+        }
+      ]
+    },
     {
       "name": "Login",
       "request": {
@@ -12,9 +48,7 @@
         "header": [
           {
             "key": "Content-Type",
-            "name": "Content-Type",
-            "value": "application/json",
-            "type": "text"
+            "value": "application/json"
           }
         ],
         "body": {
@@ -31,37 +65,72 @@
           ]
         }
       },
-      "response": []
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var jsonData = JSON.parse(responseBody);",
+              "postman.setEnvironmentVariable('jwt', jsonData.token);"
+            ]
+          }
+        }
+      ]
     },
     {
-      "name": "Logout",
+      "name": "Create Car",
       "request": {
         "method": "POST",
         "header": [
           {
             "key": "Content-Type",
-            "name": "Content-Type",
-            "value": "application/json",
-            "type": "text"
+            "value": "application/json"
           },
           {
             "key": "Authorization",
-            "name": "Authorization",
-            "value": "Bearer {{jwt}}",
-            "type": "text"
+            "value": "Bearer {{jwt}}"
           }
         ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"make\": \"Toyota\",\n  \"model\": \"Camry\",\n  \"year\": 2022\n}"
+        },
         "url": {
-          "raw": "http://localhost:1337/logout",
+          "raw": "http://localhost:1337/car",
           "host": [
             "http://localhost:1337"
           ],
           "path": [
-            "logout"
+            "car"
           ]
         }
-      },
-      "response": []
+      }
+    },
+    {
+      "name": "Get All Cars",
+      "request": {
+        "method":  "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:1337/car",
+          "host": [
+            "http://localhost:1337"
+          ],
+          "path": [
+            "car"
+          ]
+        }
+      }
     }
   ],
   "protocolProfileBehavior": {}
